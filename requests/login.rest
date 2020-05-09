@@ -1,0 +1,7 @@
+post https://opendata.hopefully.works/api/login
+Content-type: application/json
+
+{
+  "email": "",
+  "password": ""
+}
