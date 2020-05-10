@@ -1,12 +1,12 @@
-const axios = require("axios");
-const express = require("express");
-const mongoose = require("mongoose");
+const axios = require('axios');
+const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
-const config = require("./utils/config");
-const Sensor = require("./models/sensor");
-const sensorsRoute = require("./controllers/sensors");
-const publicPath = path.join(__dirname, 'build');
+const config = require('./utils/config');
+const Sensor = require('./models/sensor');
+const sensorsRoute = require('./controllers/sensors');
+const publicPath = path.join(__dirname, 'client/build');
 
 mongoose
 .connect(config.MONGODB_URI, {
@@ -14,15 +14,15 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .then(() => console.log("Connected to MongoDB"))
+  .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log(err));
   
-const CronJob = require("cron").CronJob;
-const collectSensorData = new CronJob("0 */30 * * * *", async () => {
-  console.log("You will see this message every minute");
+const CronJob = require('cron').CronJob;
+const collectSensorData = new CronJob('0 */30 * * * *', async () => {
+  console.log('You will see this message every minute');
   const options = {
-    method: "get",
-    url: "https://opendata.hopefully.works/api/events",
+    method: 'get',
+    url: 'https://opendata.hopefully.works/api/events',
     headers: {
       Authorization: `Bearer ${config.TOKEN}`,
     },
@@ -52,7 +52,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use(express.static(publicPath));
-server.use("/api/events", sensorsRoute);
+server.use('/api/events', sensorsRoute);
 
 server.listen(config.PORT, () =>
   console.log(`Server running on port ${config.PORT}`)
